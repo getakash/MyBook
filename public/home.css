@@ -1,0 +1,79 @@
+.col-lg-6{
+    padding-right: 0;
+    padding-left: 0;
+    margin: 100px 0 100px 0;
+}
+.jumbotron1{
+    background: url("https://images.unsplash.com/photo-1560762484-813fc97650a0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80");
+    background-size: cover;
+   
+}
+.navbar{
+    background: white !important;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.navbar-brand{
+    font-family: "Cabin Sketch";
+    color: #490b73 !important;
+    font-size: 30px;
+}
+.nav-item{
+    font-size: 18px;
+    font-weight: 400;
+    padding-right: 5px ;
+}
+.btn-outline-light{
+    color: #490b73 !important;
+}
+.jtitle{
+    font-weight: 400;
+}
+.jpara{
+    font-weight: 500;
+    font-family: ;
+}
+.jh1{
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+hr{
+    border: 1px solid white ;
+}
+.row{
+    margin-bottom: 30px;
+}
+.jumbotron2{
+    
+    border-radius: 12px ;
+}
+.col-lg-41{
+    
+    background: url("https://images.unsplash.com/photo-1560762484-813fc97650a0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80");
+    border: 1px solid white;
+}
+.col-lg-3{
+    
+}
+.row2{
+    background: black;
+}
+li{
+    margin-top: 15px;;
+}
+.h8{
+    font-size: 13px;
+}
+.mt-42{
+    margin-top: 30px;
+}
+.container2{
+    padding-top: 22px;
+    padding-bottom: 2px;
+}
+.connectwithus-ul{
+    list-style: none;
+}
+.ul{
+    text-decoration: underline;
+}
