@@ -1,12 +1,117 @@
-var express     = require("express"),
-    app         = express();
+var express                 = require("express"),
+    app                     = express(),
+    mongoose                = require("mongoose"),
+    passport                = require("passport"),
+    passportLocal           = require("passport-local"),
+    passportLocalMongoose   = require("passport-local-mongoose"),
+    bodyParser              = require("body-parser"),
+    user                    = require("./models/user"),
+    card                    = require("./models/card");
 
+mongoose.connect("mongodb+srv://akash_verma:zigzagzoo@cluster0-8ogkm.mongodb.net/test?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true });
 app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: "true" }));
 
-app.get("/", function(req, res){
+// app.use(passport.initialize());
+// app.use(passport.session());
+// app.use(require("express-session")({
+//     secret: "my name is akash",
+//     resave: false,
+//     saveUninitialized: false
+// }));
+// passport.serializeUser(user.serializeUser());
+// passport.deserializeUser(user.deserializeUser());
+
+
+// user.create({
+// 	username: "dolgy pantro",
+// 	password: "zigzagzoo",
+// }, function(err, user){
+// 	if(err){
+// 	console.log(err);
+// 	}else{
+// 		console.log("new user signed in");
+// 		console.log(user);
+// 	}
+// });
+
+// card.create({
+//     label: "web development",
+//     date: Date.now()
+// }, function (err, card1) {
+//     if (err) {
+//         console.log(err);
+//     } else {
+//         console.log("new card is made");
+//         console.log(card1);
+//     }
+// });
+
+app.get("/", function (req, res) {
     res.render("home.ejs");
 })
 
+app.get("/login", function (req, res) {
+    res.render("login.ejs");
+})
+
+app.get("/signup", function (req, res) {
+    res.render("signup.ejs");
+})
+app.post("/signup", function(req, res){
+    user.create({username: req.body.username, password: req.body.password}, function(err, createduser){
+        if (err) {
+            console.log(err);
+            res.redirect("/signup");
+        }else{
+            res.redirect("/user/"+ createduser._id +"/new");
+        }
+    })
+})
+
+app.get("/forgotpassword", function (req, res) {
+    res.render("f_pwd.ejs");
+})
+
+app.get("/user/:userid" , function(req, res){
+    res.render("userpage.ejs", {userid: req.params.userid});
+})
+app.get("/user/:userid/new", function (req, res) {
+    res.render("new.ejs", {userid: req.params.userid});
+})
+app.post("/:userid/new", function(req, res){
+    user.findById(req.params.userid, function(err, founduser){
+        if(err){
+            console.log(err);
+            res.redirect("/user/"+ req.params.userid +"/new");
+        }else{
+            var carddata = {
+                label: req.body.label,
+                title: req.body.title,
+                link: req.body.link,
+                description: req.body.description,
+                date: Date.now(),
+                uploader: founduser.username
+            };
+            card.create(carddata, function (err, createdcard) {
+                if(err){
+                    console.log(err);
+                    res.redirect("/user/" + req.params.userid + "/new");
+                }else{
+                    founduser.card.push(createdcard);
+                    founduser.save(function(err, user){
+                        if (err) {
+                            console.log(err);
+                        }else{
+                            res.redirect("/user/"+req.params.userid);
+                        }
+                    })
+                }
+            })
+        }
+
+    })
+})
 
 
 
