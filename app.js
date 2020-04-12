@@ -13,7 +13,7 @@ app.get("/", function(req, res){
 
 
 
-app.listen(process.env.port || 3300, function(){
+app.listen(process.env.port, function(){
     console.log("server has started");
 });
 
