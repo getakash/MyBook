@@ -1,0 +1,49 @@
+<%- include("./partials/header.ejs") %>
+
+<!-- for pc -->
+<div class="container container-new">
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3 ml-auto mr-auto"></div>
+        <div class="col-lg-3 col-md-4 col-sm-5 col-6 border ml-auto mr-auto">
+            <form class="pl-3 pr-3" action="/<%= userid %>/new" method="POST">
+                <div class="form-group text-center mt-4">
+                    <label class="text-dark h4" for="exampleInputEmail1">Label:</label>
+                    <select class="custom-select custom-select-lg mb-3" name="label">
+                        <option value="cp">Competetive Prog</option>
+                        <option value="wd">Web Development</option>
+                        <option value="ad">Android Development</option>
+                        <option value="id">IOS Development</option>
+                        <option value="iot">Internet Of Things</option>
+                        <option value="ml">Machine Learning</option>
+                        <option value="o">Other</option>
+                    </select>
+                </div>
+                <div class="form-group text-center mt-4">
+                    <label class="text-dark h4" for="exampleInputEmail1">Title:</label>
+                    <input class="" type="text" name="title" class="form-control" id="exampleInputEmail1"
+                        aria-describedby="emailHelp">
+                </div>
+                <div class="form-group text-center">
+                    <label class="text-dark h4" for="exampleInputPassword1">Description:</label>
+                    <textarea class="form-control justify-content-center" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                <div class="form-group text-center">
+                    <label class="text-dark h4" for="exampleInputPassword1">Link:</label>
+                    <input class="" type="text" name="link" class="form-control" id="exampleInputPassword1">
+                </div>
+                <!-- <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                </div> -->
+                <div class="text-center mb-4">
+                    <button type="submit" class="btn btn-primary">SAVE</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-3 ml-auto mr-auto"></div>
+    </div>
+</div>
+
+
+<!-- for mobile -->
+<%- include("./partials/footer.ejs") %>
