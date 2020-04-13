@@ -6,11 +6,13 @@ var express                 = require("express"),
     passportLocalMongoose   = require("passport-local-mongoose"),
     bodyParser              = require("body-parser"),
     user                    = require("./models/user"),
-    card                    = require("./models/card");
+    card                    = require("./models/card"),
+    methodOverride          = require("method-override");
 
 mongoose.connect("mongodb+srv://akash_verma:zigzagzoo@cluster0-8ogkm.mongodb.net/test?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true });
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: "true" }));
+app.use(methodOverride("_method"));
 
 // app.use(passport.initialize());
 // app.use(passport.session());
@@ -74,10 +76,34 @@ app.get("/forgotpassword", function (req, res) {
 })
 
 app.get("/user/:userid" , function(req, res){
-    res.render("userpage.ejs", {userid: req.params.userid});
+    user.findById(req.params.userid, function(err, founduser){
+        if (err) {
+            console.log(err);
+        }else{
+            card.find({_id: {"$in": founduser.card}}, function(err, foundcard){
+                if (err) {
+                    console.log(err);
+                }else{
+                    res.render("userpage.ejs", {user: founduser, card: foundcard});
+                }
+            })
+        }
+    })
 })
 app.get("/user/:userid/new", function (req, res) {
-    res.render("new.ejs", {userid: req.params.userid});
+    user.findById(req.params.userid, function (err, founduser) {
+        if (err) {
+            console.log(err);
+        } else {
+            card.find({ _id: { "$in": founduser.card } }, function (err, foundcard) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.render("new.ejs", { user: founduser, card: foundcard });
+                }
+            })
+        }
+    })
 })
 app.post("/:userid/new", function(req, res){
     user.findById(req.params.userid, function(err, founduser){
@@ -85,12 +111,15 @@ app.post("/:userid/new", function(req, res){
             console.log(err);
             res.redirect("/user/"+ req.params.userid +"/new");
         }else{
+            var date = new Date();
+            var dated = date.toDateString();
+            console.log(dated);
             var carddata = {
                 label: req.body.label,
                 title: req.body.title,
                 link: req.body.link,
                 description: req.body.description,
-                date: Date.now(),
+                date: dated,
                 uploader: founduser.username
             };
             card.create(carddata, function (err, createdcard) {
@@ -110,6 +139,38 @@ app.post("/:userid/new", function(req, res){
             })
         }
 
+    })
+})
+
+app.get("/user/:userid/ques/:qid", function(req,res){
+    user.findById(req.params.userid, function (err, founduser) {
+        if (err) {
+            console.log(err);
+        } else {
+            card.find({ _id: { "$in": founduser.card } }, function (err, foundcard) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    card.findById(req.params.qid, function(err, card_edit){
+                        if (err) {
+                            console.log(err);
+                        }else{
+                            res.render("edit.ejs", { user: founduser, card: foundcard, card_edit: card_edit });
+                        }
+                    })
+                }
+            })
+        }
+    })
+})
+
+app.put("/user/:userid/ques/:qid", function(req, res){
+    card.findByIdAndUpdate(req.params.qid, req.body.ques, function(err, updatedcard){
+        if (err) {
+            console.log(err);
+        }else{
+            res.redirect("/user/"+req.params.userid);
+        }
     })
 })
 

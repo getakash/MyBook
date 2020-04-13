@@ -1,8 +1,58 @@
 <%- include("./partials/header.ejs") %>
 
-<div class="text-center mt-4">
-    <a class="text-light" href="<%= userid %>/new">Add New card</a>
+
+<div class="container container-userpage">
+
+    <div class="d-flex justify-content-between mb-2">
+        <div class="">
+            <h2 class="text-light text-center mb-0 ">Your Questions:</h2>
+        </div>
+        <div class=""><a href="/user/<%= user._id %>/new"><button type="button" class="btn btn-success  action-btn mr-1"><i
+                        class="fas fa-plus"></i></button></a></div>
+    </div>
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Label</th>
+                <th scope="col" class="d-none d-sm-none d-md-block">Uploaded on</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <% 
+            var count = 1;
+            card.forEach(function(x){ 
+        %>
+        <tbody class="tbody-light">
+            <tr>
+                <th scope="row"><%= count %></th>
+                <td class="pr-0"><a href="<%= x.link %>"><%= x.title %></a></td>
+                <td class="pr-0"><%= x.label %></td>
+                <td class="pr-0 d-none d-sm-none d-md-block"><%= x.date %></td>
+                <td class="pr-2">
+                    <div class="d-flex flex-coloumn ">
+                    <button type="button" class="btn btn-danger  action-btn mr-1"><i class="fas fa-trash-alt "></i></button>
+                    <a href="/user/<%= user._id %>/ques/<%= x._id %>"><button type="button" class="btn btn-primary action-btn "><i class="fas fa-pencil-alt"></i></button></a>
+                    </div>
+                </td>
+            </tr>
+            
+        </tbody>
+        <% count++; }) %>
+    </table>
+    <div class="d-flex justify-content-end">
+       <h4 class="text-light">Total: <%= count-1 %></h4>
+    </div>
 </div>
+
+
+
+<script>
+  
+   
+</script>
 
 <%- include("./partials/footer.ejs") %>
 

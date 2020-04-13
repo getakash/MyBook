@@ -15,7 +15,7 @@
 }
 .navbar-brand{
     font-family: "Cabin Sketch";
-    color: #490b73 !important;
+    color: #b524ab !important;
     font-size: 30px;
 }
 .nav-item{
@@ -24,7 +24,7 @@
     padding-right: 5px ;
 }
 .btn-outline-light{
-    color: #490b73 !important;
+    color: purple !important;
 }
 .jtitle{
     font-weight: 400;

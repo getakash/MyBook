@@ -6,8 +6,7 @@ var cardschema = new mongoose.Schema({
     label: String,
     title: String,
     link: String,
-    description: String,
-    date: Date,
+    date: String,
     uploader: String,
 });
 

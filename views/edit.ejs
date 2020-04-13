@@ -1,0 +1,99 @@
+<%- include("./partials/header.ejs") %>
+
+<h2 class="text-light text-center mt-5 mb-0 blur">Your Questions:</h2>
+<div class="container container-userpage">
+    <div class="d-flex justify-content-between mb-2">
+        <div class="">
+            <h2 class="text-light text-center mb-0 ">Your Questions:</h2>
+        </div>
+        <div class=""><button type="button" class="btn btn-success  action-btn mr-1"><i
+                        class="fas fa-plus"></i></button></div>
+    </div>
+    <table class="table blur">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Label</th>
+                <th scope="col" class="d-none d-sm-none d-md-block">Uploaded on</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <% 
+            var count = 1;
+            card.forEach(function(x){ 
+        %>
+        <tbody class="tbody-light">
+            <tr>
+                <th scope="row"><%= count %></th>
+                <td class="pr-0"><%= x.title %></td>
+                <td class="pr-0"><%= x.label %></td>
+                <td class="pr-0 d-none d-sm-none d-md-block"><%= x.date %></td>
+                <td class="pr-2">
+                    <div class="d-flex flex-coloumn ">
+                        <button type="button" class="btn btn-danger  action-btn mr-1"><i
+                                class="fas fa-trash-alt "></i></button>
+                        <button type="button" class="btn btn-primary action-btn "><i
+                                class="fas fa-pencil-alt"></i></button>
+                    </div>
+                </td>
+            </tr>
+
+        </tbody>
+        <% count++; }) %>
+    </table>
+    <div class="d-flex justify-content-end">
+        <h4 class="text-light blur">Total: <%= count-1 %></h4>
+    </div>
+</div>
+
+<div class="position-absolute">
+    <div class="container container-new">
+        <div class="row">
+            <div class="col-lg-2 col-md-2 col-sm-2 ml-auto mr-auto"></div>
+            <div class="col-lg-8 col-md-8 col-sm-8 col-12 border ml-auto mr-auto">
+                <form class="pl-3 pr-3" action="/user/<%= user._id %>/ques/<%= card_edit._id %>?_method=PUT" method="POST">
+                    <div class="form-group text-center mt-4">
+                        <label class="text-dark h4" for="exampleInputEmail1">Label:</label>
+                        <select class="custom-select custom-select-lg mb-3" value="<%= card_edit.label %>" name="ques[label]">
+                            <option value="" selected disabled hidden>Choose here</option>
+                            <option value="competetive prog">Competetive Prog</option>
+                            <option value="Web Development">Web Development</option>
+                            <option value="Android Development">Android Development</option>
+                            <option value="IOS Development">IOS Development</option>
+                            <option value="Internet Of Things">Internet Of Things</option>
+                            <option value="Machine Learning">Machine Learning</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group text-center mt-4">
+                        <label class="text-dark h4" for="exampleInputEmail1">Title:</label>
+                        <input class="" type="text" name="ques[title]" value="<%= card_edit.title %>" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="form-group text-center">
+                        <label class="text-dark h4" for="exampleInputPassword1">Link:</label>
+                        <input class="" type="text" name="ques[link]" value="<%= card_edit.link %>" class="form-control" id="exampleInputPassword1">
+                    </div>
+                    <!-- <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    </div> -->
+                    <div class="text-center mb-4">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 ml-auto mr-auto"></div>
+        </div>
+        <div class="text-center mt-2"><a href="/user/<%= user._id %>"><button type="button" class="btn btn-info">Back</button></a></div>
+    </div>
+</div>
+
+
+<script>
+
+
+</script>
+
+<%- include("./partials/footer.ejs") %>

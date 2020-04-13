@@ -1,46 +1,98 @@
 <%- include("./partials/header.ejs") %>
 
 <!-- for pc -->
-<div class="container container-new">
-    <div class="row">
-        <div class="col-lg-3 col-md-3 col-sm-2 ml-auto mr-auto"></div>
-        <div class="col-lg-4 col-md-5 col-sm-7 col-10 border ml-auto mr-auto">
-            <form class="pl-3 pr-3" action="/<%= userid %>/new" method="POST">
-                <div class="form-group text-center mt-4">
-                    <label class="text-dark h4" for="exampleInputEmail1">Label:</label>
-                    <select class="custom-select custom-select-lg mb-3" name="label">
-                        <option value="cp">Competetive Prog</option>
-                        <option value="wd">Web Development</option>
-                        <option value="ad">Android Development</option>
-                        <option value="id">IOS Development</option>
-                        <option value="iot">Internet Of Things</option>
-                        <option value="ml">Machine Learning</option>
-                        <option value="o">Other</option>
-                    </select>
-                </div>
-                <div class="form-group text-center mt-4">
-                    <label class="text-dark h4" for="exampleInputEmail1">Title:</label>
-                    <input class="" type="text" name="title" class="form-control" id="exampleInputEmail1"
-                        aria-describedby="emailHelp">
-                </div>
-                <div class="form-group text-center">
-                    <label class="text-dark h4" for="exampleInputPassword1">Description:</label>
-                    <textarea class="form-control justify-content-center" name="description" id="exampleFormControlTextarea1" rows="3"></textarea>
-                </div>
-                <div class="form-group text-center">
-                    <label class="text-dark h4" for="exampleInputPassword1">Link:</label>
-                    <input class="" type="text" name="link" class="form-control" id="exampleInputPassword1">
-                </div>
-                <!-- <div class="form-group form-check">
-                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                </div> -->
-                <div class="text-center mb-4">
-                    <button type="submit" class="btn btn-primary">SAVE</button>
-                </div>
-            </form>
+<div class="container container-userpage blur">
+
+    <div class="d-flex justify-content-between mb-2">
+        <div class="">
+            <h2 class="text-light text-center mb-0 ">Your Questions:</h2>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-2 ml-auto mr-auto"></div>
+        <div class=""><button type="button"
+                    class="btn btn-success  action-btn mr-1"><i class="fas fa-plus"></i></button></div>
+    </div>
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Label</th>
+                <th scope="col" class="d-none d-sm-none d-md-block">Uploaded on</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <% 
+            var count = 1;
+            card.forEach(function(x){ 
+        %>
+        <tbody class="tbody-light">
+            <tr>
+                <th scope="row"><%= count %></th>
+                <td class="pr-0"><%= x.title %></td>
+                <td class="pr-0"><%= x.label %></td>
+                <td class="pr-0 d-none d-sm-none d-md-block"><%= x.date %></td>
+                <td class="pr-2">
+                    <div class="d-flex flex-coloumn ">
+                        <button type="button" class="btn btn-danger  action-btn mr-1"><i
+                                class="fas fa-trash-alt "></i></button>
+                        <button type="button"
+                                class="btn btn-primary action-btn "><i class="fas fa-pencil-alt"></i></button>
+                    </div>
+                </td>
+            </tr>
+
+        </tbody>
+        <% count++; }) %>
+    </table>
+    <div class="d-flex justify-content-end">
+        <h4 class="text-light">Total: <%= count-1 %></h4>
+    </div>
+</div>
+
+
+
+
+
+<div class="position-absolute">
+    <div class="container container-new">
+        <div class="row">
+            <div class="col-lg-1 col-md-1 col-sm-1 ml-auto mr-auto"></div>
+            <div class="col-lg-10 col-md-10 col-sm-10 col-12 border ml-auto mr-auto">
+                <form class="pl-3 pr-3" action="/<%= user._id %>/new" method="POST">
+                    <div class="form-group text-center mt-4">
+                        <label class="text-dark h4" for="exampleInputEmail1">Label:</label>
+                        <select class="custom-select custom-select-lg mb-3" name="label">
+                            <option value="" selected disabled hidden>Choose here</option>
+                            <option value="competetive prog">Competetive Prog</option>
+                            <option value="Web Development">Web Development</option>
+                            <option value="Android Development">Android Development</option>
+                            <option value="IOS Development">IOS Development</option>
+                            <option value="Internet Of Things">Internet Of Things</option>
+                            <option value="Machine Learning">Machine Learning</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group text-center mt-4">
+                        <label class="text-dark h4" for="exampleInputEmail1">Title:</label>
+                        <input class="" type="text" name="title" class="form-control" id="exampleInputEmail1"
+                            aria-describedby="emailHelp">
+                    </div>
+                    <div class="form-group text-center">
+                        <label class="text-dark h4" for="exampleInputPassword1">Link:</label>
+                        <input class="" type="text" name="link" class="form-control" id="exampleInputPassword1">
+                    </div>
+                    <!-- <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    </div> -->
+                    <div class="text-center mb-4">
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1 ml-auto mr-auto"></div>
+        </div>
+        <div class="text-center mt-2"><a href="/user/<%= user._id %>"><button type="button" class="btn btn-warning">Back</button></a></div>
     </div>
 </div>
 
