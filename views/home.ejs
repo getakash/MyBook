@@ -57,26 +57,28 @@
             <h1 class="display-4 text-white jtitle">Make list of your Problems</h1>
             <hr>
             <p class="lead text-white jpara text-justify ">It often happens that you visit a problem, appreciate it and wants to save for yourself. MyBook allows you to save your favourite problems for yourself. Just click and add. </p>
-            <a href="/signup"><button type="button" class="btn btn-success btn-lg btn-block "><span class="jh1">Start Adding</span></button></a>
+            <a href="
+            <% if(currentuser){ %>
+                /user/<%= currentuser._id %>/new
+                <% }else{ %>
+                    /login
+                    <% } %>
+            "><button type="button" class="btn btn-success btn-lg btn-block "><span class="jh1">Start Adding</span></button></a>
         </div>
     </div>
 
     
     <div class="cotainer step-container">
-        <div class="row d-flex">
-            <div class="colcolor col-lg-4 col-lg-41 col-md-4 col-sm">
-                <h1 class="h1 text-white text-center pt-2">Step-1</h1>
-                <p class="lead text-white text-center">Login.</p>
+        <div class="row d-flex flex-coloumn align-self-center">
+            <div class="colcolor align-self-center col-lg-2 col-md-3 col-lg-41 text-center ">
+                <h3 class="h5 acme txt-prpl">“when you don't create things, you become defined by your tastes rather than ability. your tastes only narrow & exclude
+                people.So create”</h3>
             </div>
-            <div class="colcolor col-lg-4 col-lg-41 col-md-4 col-sm">
-        
-                <h1 class="h1 text-white text-center pt-2">Step-2</h1>
-                <p class="lead text-white text-center">Add your questions.</p>
+            <div class="colcolor align-self-center col-lg-8 col-lg-41 col-md-6 text-center">
+                <img class="image pr-0 pl-0" src="https://images.unsplash.com/photo-1568822617270-2c1579f8dfe2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="">
             </div>
-            <div class="colcolor col-lg-4 col-lg-41 col-md-4 col-sm">
-        
-                <h1 class="h1 text-white text-center pt-2">Step-3</h1>
-                <p class="lead text-white text-center">There is no step-3.</p>
+            <div class="colcolor align-self-center col-lg-2 col-lg-41 col-md-3 text-center mt-1">
+                <h3 class="h5 line-ht acme txt-prpl">"Always code as if the guy who ends up maintaining your code will be a violent psychopath who knows where you live"</h3>
             </div>
         </div>
     </div>

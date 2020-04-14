@@ -17,7 +17,8 @@
     color: purple !important;
 }
 body{
-    background: black;
+    background: url("https://images.unsplash.com/photo-1545393470-1a87ebf28d01?ixlib=rb-1.2.1&auto=format&fit=crop&w=334&q=80");
+    background-size: cover;
 }
 .container{
     margin-top: 125px;

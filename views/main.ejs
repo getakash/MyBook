@@ -7,7 +7,13 @@
         <div class="">
             <h2 class="text-light text-center mb-0 ">All Questions:</h2>
         </div>
-        <div class=""><a href=""><button type="button"
+        <div class=""><a href="
+            <% if(currentuser){ %>
+                /user/<%= currentuser._id %>/new
+                <% }else{ %>
+                    /login
+                    <% } %>
+            "><button type="button"
                     class="btn btn-success  action-btn mr-1"><i class="fas fa-plus"></i></button></a></div>
     </div>
 
