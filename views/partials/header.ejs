@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MyBook</title>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
+    <script src="https://rawgit.com/makeusabrew/bootbox/f3a04a57877cab071738de558581fbc91812dce9/bootbox.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
@@ -20,7 +21,7 @@
         <div class="d-flex justify-content-left">
             <div><a class="navbar-brand" href="/">MyBook</a></div>
             <div class="navbar-nav ">
-                <a class="nav-item nav-link" href="#"><button type="button" class="btn btn-outline-light">Our
+                <a class="nav-item nav-link" href="/main"><button type="button" class="btn btn-outline-light">Our
                         Questions</button></a>
             </div>
 
@@ -31,6 +32,7 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
             <div class="navbar-nav ">
+                <% if(!currentuser){ %>
                 <a class="nav-item nav-link" href="#"><button type="button" class="btn btn-outline-light">Help us
                         improve</button></a>
                 <a class="nav-item nav-link" href="/login"><button type="button" class="btn btn-outline-light"><i
@@ -39,7 +41,13 @@
                             class="fas fa-user-plus"></i> Signup</button></a>
                 <a class="nav-item nav-link" href="/forgotpassword"><button type="button" class="btn btn-outline-light"><i
                             class="fas fa-unlock"></i> Forgot-Password</button></a>
-
+                <% }else{ %>
+                    <a class="nav-item nav-link" href="/user/<%= currentuser._id %>"><button type="button" class="btn btn-outline-light"><i
+                                class="fas fa-book-open"></i>
+                            My Cards</button></a>
+                <a class="nav-item nav-link" href="#"><button type="button" class="btn btn-outline-light"><i class="fas fa-user"></i> <%= currentuser.username %></button></a>
+                <a class="nav-item nav-link" href="/logout"><button type="button" class="btn btn-outline-light"><i class="fas fa-sign-out-alt"></i> Logout</button></a>
+                <% } %>
             </div>
         </div>
     </nav>

@@ -33,7 +33,28 @@
                 <td class="pr-0 d-none d-sm-none d-md-block"><%= x.date %></td>
                 <td class="pr-2">
                     <div class="d-flex flex-coloumn ">
-                    <button type="button" class="btn btn-danger  action-btn mr-1"><i class="fas fa-trash-alt "></i></button>
+                        <form action="/delete/<%= user._id %>/<%= x._id %>?_method=DELETE" method="POST">
+                            
+                            <button type="button" class="btn btn-danger  action-btn mr-1" data-toggle="modal" data-target="#exampleModalCenter" ><i class="fas fa-trash-alt "></i></button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalCenterTitle">Are you sure?</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="submit" name="delete" value="DELETE" class="btn btn-danger">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
                     <a href="/user/<%= user._id %>/ques/<%= x._id %>"><button type="button" class="btn btn-primary action-btn "><i class="fas fa-pencil-alt"></i></button></a>
                     </div>
                 </td>

@@ -14,17 +14,21 @@ app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: "true" }));
 app.use(methodOverride("_method"));
 
-// app.use(passport.initialize());
-// app.use(passport.session());
-// app.use(require("express-session")({
-//     secret: "my name is akash",
-//     resave: false,
-//     saveUninitialized: false
-// }));
-// passport.serializeUser(user.serializeUser());
-// passport.deserializeUser(user.deserializeUser());
+app.use(require("express-session")({
+    secret: "my name is akash",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new passportLocal(user.authenticate()));
+passport.serializeUser(user.serializeUser());
+passport.deserializeUser(user.deserializeUser());
 
-
+app.use(function(req, res, next){
+    res.locals.currentuser = req.user;
+    next();
+});
 // user.create({
 // 	username: "dolgy pantro",
 // 	password: "zigzagzoo",
@@ -56,17 +60,41 @@ app.get("/", function (req, res) {
 app.get("/login", function (req, res) {
     res.render("login.ejs");
 })
+app.post("/login", function (req, res, next) {
+    passport.authenticate("local", function (err, userr, info) {
+        if (err) {
+            return next(err);
+        }
+        if (!userr) {
+
+            return res.redirect("/login");
+        }
+        req.login(userr, function (err) {
+            if (err) {
+                console.log(err);
+            } else {
+
+                res.redirect("/user/" + userr._id);
+
+            }
+        })
+    })(req, res, next);
+})
+
 
 app.get("/signup", function (req, res) {
     res.render("signup.ejs");
 })
 app.post("/signup", function(req, res){
-    user.create({username: req.body.username, password: req.body.password}, function(err, createduser){
+    user.register(new user({username: req.body.username, password: req.body.password}), req.body.password, function(err, createduser){
         if (err) {
             console.log(err);
             res.redirect("/signup");
         }else{
-            res.redirect("/user/"+ createduser._id +"/new");
+            passport.authenticate("local")(req, res, function(){
+                res.redirect("/user/" + createduser._id);
+            })
+
         }
     })
 })
@@ -74,8 +102,12 @@ app.post("/signup", function(req, res){
 app.get("/forgotpassword", function (req, res) {
     res.render("f_pwd.ejs");
 })
+app.get("/logout", function (req, res) {
+    req.logout();
+    res.redirect("/");
+})
 
-app.get("/user/:userid" , function(req, res){
+app.get("/user/:userid" , isloggedin, function(req, res){
     user.findById(req.params.userid, function(err, founduser){
         if (err) {
             console.log(err);
@@ -90,7 +122,7 @@ app.get("/user/:userid" , function(req, res){
         }
     })
 })
-app.get("/user/:userid/new", function (req, res) {
+app.get("/user/:userid/new",isloggedin, function (req, res) {
     user.findById(req.params.userid, function (err, founduser) {
         if (err) {
             console.log(err);
@@ -105,7 +137,7 @@ app.get("/user/:userid/new", function (req, res) {
         }
     })
 })
-app.post("/:userid/new", function(req, res){
+app.post("/:userid/new",isloggedin, function(req, res){
     user.findById(req.params.userid, function(err, founduser){
         if(err){
             console.log(err);
@@ -142,7 +174,7 @@ app.post("/:userid/new", function(req, res){
     })
 })
 
-app.get("/user/:userid/ques/:qid", function(req,res){
+app.get("/user/:userid/ques/:qid",isloggedin, function(req,res){
     user.findById(req.params.userid, function (err, founduser) {
         if (err) {
             console.log(err);
@@ -164,7 +196,7 @@ app.get("/user/:userid/ques/:qid", function(req,res){
     })
 })
 
-app.put("/user/:userid/ques/:qid", function(req, res){
+app.put("/user/:userid/ques/:qid",isloggedin, function(req, res){
     card.findByIdAndUpdate(req.params.qid, req.body.ques, function(err, updatedcard){
         if (err) {
             console.log(err);
@@ -174,10 +206,51 @@ app.put("/user/:userid/ques/:qid", function(req, res){
     })
 })
 
+app.get("/main", function(req,res){
+    card.find({},function(err, allcards){
+        if (err) {
+            console.log(err);
+        }else{
+            res.render("main.ejs", {card: allcards});
+        }
+    })
+})
 
+app.delete("/delete/:userid/:cardid",isloggedin, function(req,res){
+    if(req.body.delete == "DELETE"){
+        card.findByIdAndRemove(req.params.cardid, function (err, nul) {
+            if (err) {
+                console.log(err);
+            } else {
+                user.findById(req.params.userid, function (err, founduser) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        founduser.card.remove(req.params.cardid);
+                        founduser.save(function (err, nul) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                                res.redirect("/user/" + req.params.userid);
+                            }
+                        })
+                    }
+                })
+            }
+        })
+    } else {
+        res.redirect("/user/" + req.params.userid);
+    }
+    
+})
 
-
-
+function isloggedin(req, res, next){
+    if (req.isAuthenticated()) {
+        return next();
+    }else{
+        res.redirect("/login");
+    }
+}
 
 app.listen(process.env.PORT || 3300, function(){
     console.log("server has started");

@@ -1,0 +1,52 @@
+<%- include("./partials/header.ejs") %>
+
+
+<div class="container container-userpage">
+
+    <div class="d-flex justify-content-between mb-2">
+        <div class="">
+            <h2 class="text-light text-center mb-0 ">All Questions:</h2>
+        </div>
+        <div class=""><a href=""><button type="button"
+                    class="btn btn-success  action-btn mr-1"><i class="fas fa-plus"></i></button></a></div>
+    </div>
+
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Label</th>
+                <th scope="col" class=" pr-1">Uploaded on</th>
+                <th scope="col" class="d-none d-sm-none d-md-block">Uploader</th>
+            </tr>
+        </thead>
+        <% 
+            var count = 1;
+            card.forEach(function(x){ 
+        %>
+        <tbody class="tbody-light">
+            <tr>
+                <th scope="row"><%= count %></th>
+                <td class="pr-0"><a href="<%= x.link %>"><%= x.title %></a></td>
+                <td class="pr-0"><%= x.label %></td>
+                <td class="pr-0 pr-1"><%= x.date %></td>
+                <td class="pr-2 d-none d-sm-none d-md-block"><%= x.uploader %></td>
+            </tr>
+
+        </tbody>
+        <% count++; }) %>
+    </table>
+    <div class="d-flex justify-content-end">
+        <h4 class="text-light">Total: <%= count-1 %></h4>
+    </div>
+</div>
+
+
+
+<script>
+
+
+</script>
+
+<%- include("./partials/footer.ejs") %>
