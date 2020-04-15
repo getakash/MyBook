@@ -79,6 +79,14 @@ form{
     color: white;
 }
 .btn-success{
-    color: black !important;
-   
+    color: black !important;  
 }
+.btn-google{
+    background: #db4a39;
+    
+}
+.btn-fb{
+    background: #3b5998;
+    
+}
+

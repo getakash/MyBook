@@ -25,6 +25,24 @@ passport.use(new passportLocal(user.authenticate()));
 passport.serializeUser(user.serializeUser());
 passport.deserializeUser(user.deserializeUser());
 
+var google_client_id = '116854944974-jjbv4adn25np5k6v0upv05keung5saft.apps.googleusercontent.com';
+var google_client_secret = 'UjGct1OQK8niW0fwwNZY0tZa';
+
+// passport.use(new passportGoogle({
+//     clientID: google_client_id,
+//     clientSecret: google_client_secret,
+//     callbackURL: "/auth/google/callback"
+// }, function (accessToken, refreshToken, profile, done) {
+//     console.log(profile);
+//     user.register({username: profile.displayName}, function(err, user){
+//     return done(err, user);
+    
+// })
+// })
+// )
+
+
+
 app.use(function(req, res, next){
     res.locals.currentuser = req.user;
     next();
@@ -52,6 +70,16 @@ app.use(function(req, res, next){
 //         console.log(card1);
 //     }
 // });
+
+// app.get('/auth/google',
+//     passport.authenticate('google', {
+//         scope: ['profile', 'email']
+//     }));
+// app.get('/auth/google/callback',
+//     passport.authenticate('google', { failureRedirect: '/login', successRedirect: '/' }),
+//     function (req, res) {
+//         res.redirect('/');
+//     });
 
 app.get("/", function (req, res) {
     res.render("home.ejs");
